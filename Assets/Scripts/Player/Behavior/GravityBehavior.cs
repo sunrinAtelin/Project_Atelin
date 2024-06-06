@@ -9,6 +9,7 @@ public class GravityBehavior : PlayerBehavior
 
     public override void BehUpdate()
     {
-        manager.plVelocity.y -= gravityScale * Time.deltaTime;
+        if (!manager.IsGrounded())
+            manager.plVelocity.y -= gravityScale * Time.deltaTime;
     }
 }

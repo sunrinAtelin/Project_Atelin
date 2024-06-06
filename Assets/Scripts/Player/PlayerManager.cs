@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : HealthSystem
 {
     public static PlayerManager Main { get; private set; }
     private CharacterController ch;
@@ -12,15 +12,25 @@ public class PlayerManager : MonoBehaviour
     public List<PlayerBehavior> behaviors = new();
     [SerializeField]
     private List<string> behaviorOrder;
+    [SerializeField]
+    private Vector3 boxSize;
+    [SerializeField]
+    private float maxDistance;
+    [SerializeField]
+    private LayerMask groundLayer;
 
     public Vector3 plVelocity;
     public GameObject pointV;
     public GameObject pointH;
+    public int attackDamage;
 
     protected bool sprint, skill;
+    public bool ground;
+    public Animator animator;
 
     void Awake() {
         ch = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
 
         Main = this;
         pointH.transform.rotation = transform.rotation;
@@ -42,9 +52,23 @@ public class PlayerManager : MonoBehaviour
 
         chController.Move(plVelocity * Time.deltaTime);
 
-        if (plVelocity.y < 0 && chController.isGrounded) {
+        
+        ground = IsGrounded();
+
+        if (plVelocity.y < 0 && IsGrounded()) {
             plVelocity.y = 0;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawCube(transform.position + new Vector3(0, 1) - transform.up * maxDistance, boxSize);
+    }
+
+    public bool IsGrounded()
+    {
+        return Physics.BoxCast(transform.position + new Vector3(0, 1), boxSize, -transform.up, transform.rotation, maxDistance, groundLayer);
     }
 
     public void IdleTime(float time) {
@@ -86,5 +110,25 @@ public class PlayerManager : MonoBehaviour
 
     public bool IsMoving() {
         return true;
+    }
+
+    public void SetMaxHealth(int val)
+    {
+        throw new NotImplementedException();
+    }
+
+    public int GetMaxHealth()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetAtkDamage(int val)
+    {
+        throw new NotImplementedException();
+    }
+
+    public int GetAtkDamage()
+    {
+        throw new NotImplementedException();
     }
 }

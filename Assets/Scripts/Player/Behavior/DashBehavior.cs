@@ -9,20 +9,35 @@ public class DashBehavior : PlayerBehavior
 
     public float dashSpeed;
     public float dashTime;
+    JumpBehavior jumpbeh;
+
+    void Start() {
+        jumpbeh = manager.Beh("jump") as JumpBehavior;
+    }
 
     public override void BehUpdate()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift)) {
-            w = 11;
-
-            MoveBehavior mb = manager.Beh("move") as MoveBehavior;
-
-            mb.ForceRot();
-
-            manager.plVelocity += transform.forward * (input ? dashSpeed : -dashSpeed);
-
-            Invoke("EndDash", dashTime);
+            if (jumpbeh.isJumping) {
+                Dash();
+            } else {
+                Dash();
+                manager.animator.ResetTrigger("roll");
+                manager.animator.SetTrigger("roll");
+            }
         }
+    }
+
+    void Dash() {
+        w = 11;
+
+        MoveBehavior mb = manager.Beh("move") as MoveBehavior;
+
+        mb.ForceRot();
+
+        manager.plVelocity += transform.forward * (input ? dashSpeed : -dashSpeed);
+
+        Invoke("EndDash", dashTime);
     }
 
     void EndDash() {
