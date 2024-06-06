@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:23ca1ce8a17d03e78b9fe292f82cb8165a3e65aa96f0c34c684858de3f50d6ab
-size 887
+using System.Drawing;
+using UnityEngine;
+
+public class JumpBehavior : PlayerBehavior
+{
+    public override string Id => "jump";
+    public override int weight => 5;
+    public float jumpPower;
+
+    public override void BehUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            manager.plVelocity.y += jumpPower;
+        }
+    }
+}

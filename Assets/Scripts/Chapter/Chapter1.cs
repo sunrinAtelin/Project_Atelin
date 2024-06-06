@@ -1,3 +1,23 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6b411df2429777df25ed2f71750d9b8aa1bdaa45c91bb981636637ea228bec29
-size 556
+using UnityEngine;
+
+public class Chapter1 : Chapter
+{
+    Chapter1 instance;
+    public override Chapter Instance => instance;
+
+    void Start() {
+        instance = this;
+
+        Invoke("Game", 1);
+    }
+
+    void Game() {
+        PlayerManager.Main.Idle(true);
+        Cam.Instance.stopTrace = true;
+        
+        InteractSystem.Instance.Interact("구속장치 파괴하기", ()=>{
+            PlayerManager.Main.Idle(false);
+            Cam.Instance.stopTrace = false;
+        });
+    }
+}

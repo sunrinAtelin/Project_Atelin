@@ -1,3 +1,24 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:888ce445aa38b65e40b16c756ee49faf0eaa66761f3d1299b760ae792cf32da6
-size 459
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AttacObject : MonoBehaviour
+{
+    private int damaged=1000;
+    BoxCollider collider;
+    public int attacprogress
+    {
+      get=>damaged;
+    }
+
+    private void Start()
+    {
+        collider = GetComponent<BoxCollider>();
+    }
+
+    // Start is called before the first frame update
+    private void Attacked()
+    {
+            
+    }
+}

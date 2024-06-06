@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2a8bf5545cb8c8a06e2bcfe087ad479f3696727d4f5704cbd12a978f0edad246
-size 292
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+    void Start()
+    {
+        Application.targetFrameRate = 60;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}

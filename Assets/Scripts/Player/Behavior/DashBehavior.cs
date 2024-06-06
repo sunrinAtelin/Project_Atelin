@@ -1,3 +1,32 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1b568dbcb93e59a51d213c0b0da3f276c6832764b6c8364bc9c98cb085d70411
-size 1091
+using System.Drawing;
+using UnityEngine;
+
+public class DashBehavior : PlayerBehavior
+{
+    public override string Id => "dash";
+    public override int weight => w;
+    int w = 0;
+
+    public float dashSpeed;
+    public float dashTime;
+
+    public override void BehUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+            w = 11;
+
+            MoveBehavior mb = manager.Beh("move") as MoveBehavior;
+
+            mb.ForceRot();
+
+            manager.plVelocity += transform.forward * (input ? dashSpeed : -dashSpeed);
+
+            Invoke("EndDash", dashTime);
+        }
+    }
+
+    void EndDash() {
+        w = 0;
+        manager.plVelocity = new Vector3(0, manager.plVelocity.y);
+    }
+}
