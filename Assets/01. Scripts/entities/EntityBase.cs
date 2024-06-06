@@ -13,8 +13,6 @@ public abstract class EntityBase : MonoBehaviour
     //최대 체력
     protected int maxHealth;
     [SerializeField]
-    //공격력
-    protected int attackDamage;
 
     public bool onGround;
     public bool isDeath, isMoving;
@@ -45,14 +43,6 @@ public abstract class EntityBase : MonoBehaviour
 
     public int GetMaxHealth() {
         return maxHealth;
-    }
-
-    //공격력은 값을 받을 때 연산이 필요하므로 getter setter 구문 사용
-    public void SetAtkDamage(int val) {
-        attackDamage = val;
-    }
-    public int GetAtkDamage() {
-        return CalcAtkDamage(attackDamage);
     }
 
     //피해 입히는 함수 / 반환 값으로 피해 성공 여부 확인
